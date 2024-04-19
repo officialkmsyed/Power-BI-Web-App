@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Report</title>
+    <link rel="manifest" href="/manifest.json"> <!-- Link to manifest file -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        header {
+            background-color: #0078d4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            align-items: center;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px; /* Adjust the height as needed */
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #0078d4;
+            color: #fff;
+        }
+        #button{
+            background-color: #0078d4;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Power BI Report</h1>
+    </header>
+    <div class="container">
+        <h1>Live Stock Market Web App</h1>
+        <p>Welcome to our Progressive Web App</p>
+        <button id="installButton" style="display:none;">Install App</button> <!-- Button to trigger app installation -->
+        <!-- Embed Power BI Report -->
+        <iframe title="GoogleFinance" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=ea3a6972-83a8-4759-928d-fa0c4a492e7c&autoAuth=true&ctid=4398c2fc-05c1-4a0b-a312-c86b714cbc9a" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+    <footer>
+        <p>Made By Khishamuddin Syed and Guide by Dr.S.D.Sanap</p>
+    </footer>
+    <script>
+        // Check if the browser supports service workers
+        if ('serviceWorker' in navigator) {
+            // Register the service worker
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+
+        // Check if the app is already installed
+        window.addEventListener('beforeinstallprompt', function (e) {
+            // Show the install button
+            document.getElementById('installButton').style.display = 'block';
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Attach the install event to the button
+            document.getElementById('installButton').addEventListener('click', function () {
+                // Show the prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond
+                deferredPrompt.userChoice.then(function (choiceResult) {
+                    // Hide the install button
+                    document.getElementById('installButton').style.display = 'none';
+                    // Reset the deferred prompt variable
+                    deferredPrompt = null;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
